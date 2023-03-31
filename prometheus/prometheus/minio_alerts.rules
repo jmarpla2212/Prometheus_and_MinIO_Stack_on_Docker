@@ -1,0 +1,11 @@
+groups:
+  - name: minio_alerts
+    rules:
+      - alert: MinioStorageFull
+        expr: ((minio_disk_space_available_bytes / minio_disk_space_size_bytes) * 100) < 20
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "MinIO storage is almost full"
+          description: "MinIO storage is almost full, currently at {{ $value }}%"
